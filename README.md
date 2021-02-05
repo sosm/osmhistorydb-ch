@@ -24,4 +24,4 @@ Those programs and scripts published in this repository are available under the 
 
 ## Authors and Contact
 
-There are many authors involved in this project and is maintained by many. Contact: (tbd.)
+There are many authors involved in this project and is maintained by many. Contact: @sfkeller.
