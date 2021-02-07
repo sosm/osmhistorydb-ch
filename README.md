@@ -15,7 +15,9 @@ The code written for this project is openly available on this repo - but it's cu
 For more technical info see the issues and the [Wiki](https://github.com/sosm/osmhistorydb-ch/wiki).
 
 Dependencies (most surely incomplete :-O):
-- Python
+- [ope](https://github.com/osmcode/osm-postgresql-experiments/blob/master/README.md)
+- [changesetmd](https://github.com/ToeBee/ChangesetMD)
+- Python 3
 - shell scripts 
 - cron jobs
 - (Debian OS)
