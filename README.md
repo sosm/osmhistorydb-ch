@@ -27,7 +27,8 @@ Dependencies (most surely incomplete :-O):
 
 Copyright (C) 2021 (tbd.)
 
-Those programs and scripts published in this repository are available under the license (tbd.) (see the file LICENSE.txt). Existing programs and libraries have their own license which may be different from this one. (tbd.).
+Those programs and scripts published in this repository are available under the [ISC license](https://en.wikipedia.org/wiki/ISC_license) (see the file LICENSE.txt). 
+Existing programs and libraries have their own license which may be different from this one.
 
 
 ## Authors and Contact
