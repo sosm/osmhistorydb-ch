@@ -5,7 +5,7 @@ This is a project to implement a geospatial database containing the history (lin
 
 The 'OSM History DB' being updated periodically from the original OSM database and it consists of a PostgreSQL database and software tools like ope and changesetmd and other dependencies.
 
-There are many applications for this OSM History DB and the first one is to serve data for the '[Project of the Month Switzerland](https://wiki.openstreetmap.org/wiki/DE:Project_of_the_month_Switzerland)' application. Another application could be to implement a new 'Permanent ID' service (which requires the version number of an OSM element).
+There are many applications for this OSM History DB and the first one is to serve data for the '[Project of the Month Switzerland](https://wiki.openstreetmap.org/wiki/DE:Project_of_the_month_Switzerland)' application. Another application could be to make [timelapse videos](https://wiki.openstreetmap.org/wiki/Timelapse_videos) with it.
 
 
 ## Installation
