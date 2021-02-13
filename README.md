@@ -33,4 +33,4 @@ Existing programs and libraries have their own license which may be different fr
 
 ## Authors and Contact
 
-There are many authors involved in this project and is maintained by many. Contact: @sfkeller.
+There are many authors involved in this project and it's maintained by many. Contact: @sfkeller.
