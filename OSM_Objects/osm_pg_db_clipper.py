@@ -19,7 +19,7 @@ class DBClipper:
         cur = conn.cursor()
         print("Deleting Ways ...")
         # Query ist noch sehr langsam, muss optimiert werden
-        cur.execute("delete from ways where id not in (select ways.id from ways inner join nodes on nodes.id = any(ways.nodes));")
+        cur.execute("DELETE FROM ways w WHERE NOT EXISTS (SELECT 1 FROM nodes WHERE id = ANY (w.nodes));")
         print("Deleting Ways finished")
         conn.commit()
         cur.close()
@@ -27,7 +27,7 @@ class DBClipper:
     def deleteRelations(self, conn):
         cur = conn.cursor()
         print("Deleting Relations ...")
-        cur.execute("delete from relations where relations.id in (select relations.id from relations r, jsonb_array_elements(r.members) ids left join nodes on (ids ->> 'ref') :: BIGINT = nodes.id left join ways on (ids->>'ref') :: BIGINT = ways.id where nodes.id is null and ways.id is null);")
+        cur.execute("delete from relations r where not exists (select 1 from nodes, jsonb_array_elements(r.members) ids where id = (ids ->> 'ref') :: bigint) or not exists (select 1 from ways, jsonb_array_elements(r.members) ids where id = (ids ->> 'ref') :: bigint);")
         print("Deleting Relations finished")
         conn.commit()
         cur.close()
