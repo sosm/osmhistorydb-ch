@@ -1,23 +1,27 @@
-if ! mkdir /home/matteo/work/temp/insert.lock 2>/dev/null; then
-    echo "Already running" >&2
-    exit 1
-fi
-    # printf "Starting Pulling Data \n"
-    # pyosmium-get-changes -f [path]/sequence.state -o [path]/changes.osm.gz
-    # printf "Starting creating insert files \n"
-    # [path]/src/ope -H -a [path]/changes.osm.gz [path]/nodes=n%I.v.d.c.t.i.T.x.y. [path]/ways=w%I.v.d.c.t.i.T.N. [path]/relations=r%I.v.d.c.t.i.T.M. [path]/users=u%i.u.
-    # printf "Starting inserting files in Database \n"
-    # psql -U matteo -d historydb -f [path]/nodes.sql
-    # psql -U matteo -d historydb -f [path]/ways.sql
-    # psql -U matteo -d historydb -f [path]/relations.sql
-    # psql -U matteo -d historydb -f [path]/users.sql
-    # printf "Starting Deleting Objects outside of Switzerland \n"
-    # python3 [path]/osm_pg_db_clipper.py -u matteo -p password -d historydb -b [path]/borders.geojson
-    # printf "Cleaning up Files \n"
-    # rm [path]/changes.osm.gz
-    # rm [path]/ways.*
-    # rm [path]/nodes.*
-    # rm [path]/relations.*
-    # rm [path]/users.*
-    rm -r /home/matteo/work/temp/insert.lock
-    printf "Finished \n"
+#!/bin/bash
+
+REPDIR="replication"
+DB="osmhistory"
+
+exec &> $REPDIR/logfile.txt
+set -e
+
+
+echo "Saving Changedata in $REPDIR/changes.osm.gz (using $REPDIR/sequence.state)"
+pyosmium-get-changes -f $REPDIR/sequence.state -o $REPDIR/changes.osm.gz
+echo "Creating Insertfiles from $REPDIR/changes.osm.gz in $REPDIR/"
+ope -H -a $REPDIR/changes.osm.gz $REPDIR/nodes=n%I.v.d.c.t.i.T.x.y. $REPDIR/ways=w%I.v.d.c.t.i.T.N. $REPDIR/relations=r%I.v.d.c.t.i.T.M. $REPDIR/users=u%i.u.
+echo "Writing Data to Database $DB"
+psql -d $DB -f $REPDIR/nodes.sql
+psql -d $DB -f $REPDIR/ways.sql
+psql -d $DB -f $REPDIR/relations.sql
+psql -d $DB -f $REPDIR/users.sql
+echo "Starting $REPDIR/osm_pg_db_clipper.py"
+python3 $REPDIR/osm_pg_db_clipper.py -d $DB -b $REPDIR/borders.geojson
+echo "Deleting changefiles in $REPDIR/"
+rm $REPDIR/changes.osm.gz
+rm $REPDIR/ways.*
+rm $REPDIR/nodes.*
+rm $REPDIR/relations.*
+rm $REPDIR/users.*
+echo "Finished"
