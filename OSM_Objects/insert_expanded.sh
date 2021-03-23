@@ -24,6 +24,9 @@ osm_objects() {
     pyosmium-get-changes -f $REPDIR/sequence.state -o $REPDIR/changes.osm.gz
     echo "Creating Insertfiles from $REPDIR/changes.osm.gz in $REPDIR/"
     ope -H -a $REPDIR/changes.osm.gz $REPDIR/nodes=n%I.v.d.c.t.i.T.x.y. $REPDIR/ways=w%I.v.d.c.t.i.T.N. $REPDIR/relations=r%I.v.d.c.t.i.T.M. $REPDIR/users=u%i.u.
+    echo "Editing sql Files"
+    sed -i 's/DROP TABLE IF EXISTS ".*" CASCADE;//' $REPDIR/*.sql
+    sed -i 's/(/IF NOT EXISTS (/' $REPDIR/*.sql
     echo "Writing Data to Database $DB"
     psql -d $DB -f $REPDIR/nodes.sql
     psql -d $DB -f $REPDIR/ways.sql
@@ -40,9 +43,8 @@ osm_objects() {
 }
 
 main() {
-    changesets &
-    osm_objects &
-    wait
+    osm_objects
+    changesets
 }
 
 main

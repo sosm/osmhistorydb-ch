@@ -10,7 +10,8 @@ class DBClipper:
     def deleteChangesets(self, conn):
         cur = conn.cursor()
         print("Deleting Changesets")
-        cur.execute("delete from osm_changeset c where not st_intersects(st_setsrid(c.geom, 4326), st_setsrid(st_geomfromgeojson(\'" + clipper.boundary + "\'), 4326))")
+        cur.execute("delete from osm_changeset c where not st_intersects(st_setsrid(c.geom, 4326), st_setsrid(st_geomfromgeojson(\'" + clipper.boundary + "\'), 4326));")
+        cur.execute("delete FROM osm_changeset WHERE NOT EXISTS (SELECT 1 FROM nodes WHERE changeset_id = osm_changeset.id) and not exists (select 1 from ways where changeset_id = osm_changeset.id) and not exists (select 2 from relations where changeset_id = osm_changeset.id);")
         print("Deleting Changesets finished")
         conn.commit()
         cur.close()
