@@ -10,7 +10,7 @@ set -e
 echo "Saving Changedata in $REPDIR/changes.osm.gz (using $REPDIR/sequence.state)"
 pyosmium-get-changes -f $REPDIR/sequence.state -o $REPDIR/changes.osm.gz
 echo "Creating Insertfiles from $REPDIR/changes.osm.gz in $REPDIR/"
-ope -H -a $REPDIR/changes.osm.gz $REPDIR/nodes=n%I.v.d.c.t.i.T.x.y. $REPDIR/ways=w%I.v.d.c.t.i.T.N. $REPDIR/relations=r%I.v.d.c.t.i.T.M. $REPDIR/users=u%i.u.
+ope -H -a $REPDIR/changes.osm.gz $REPDIR/nodes=n%I.v.d.c.t.i.T.Gp $REPDIR/ways=w%I.v.d.c.t.i.T.N. $REPDIR/relations=r%I.v.d.c.t.i.T.M. $REPDIR/users=u%i.u.
 echo "Writing Data to Database $DB"
 psql -d $DB -c "\\copy \"nodes\" from '$REPDIR/nodes.pgcopy'"
 psql -d $DB -c "\\copy \"ways\" from '$REPDIR/ways.pgcopy'"
