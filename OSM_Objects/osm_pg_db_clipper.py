@@ -10,7 +10,7 @@ class DBClipper:
     def deleteNodes(self, conn):
         cur = conn.cursor()
         print("Deleting Nodes ...")
-        cur.execute("delete FROM nodes c WHERE NOT ST_CONTAINS(ST_SetSRID(ST_GeomFromGeoJSON(\'" + clipper.boundary + "\'), 4326), ST_SetSRID(ST_MAKEPOINT(c.lon, c.lat), 4326));")
+        cur.execute("delete FROM nodes c WHERE NOT ST_CONTAINS(ST_SetSRID(ST_GeomFromGeoJSON(\'" + clipper.boundary + "\'), 4326), c.geom);")
         print("Deleting Nodes finished")
         conn.commit()
         cur.close()
