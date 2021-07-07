@@ -56,6 +56,9 @@ if __name__ == '__main__':
     args = argParser.parse_args()
     osmium_fileinfo = subprocess.run(['osmium fileinfo ' + args.osm_file + ' -e'], stdout=subprocess.PIPE, shell=True).stdout.decode('utf-8')
     first_date = re.search('First: (.+)Z.*', osmium_fileinfo).group(1)
+    # rewind by three hours for safety
+    first_date = datetime.strptime(first_date, "%Y-%m-%dT%H:%M:%S") - timedelta(hours=3)
+    first_date = datetime.strftime(first_date, "%Y-%m-%dT%H:%M:%S")
     conn = psycopg2.connect(dbname=args.dbName, user=args.dbUser, password=args.dbPassword, host=args.dbHost, port=args.dbPort)
     cur = conn.cursor()
 
