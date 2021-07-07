@@ -30,7 +30,7 @@ class DBClipper:
     def deleteRelations(self, conn):
         cur = conn.cursor()
         print("Deleting Relations ...")
-        cur.execute("DELETE FROM relations r WHERE created >= %s AND NOT EXISTS (select 1 from nodes, jsonb_array_elements(r.members) ids WHERE id = (ids ->> 'ref') :: bigint) OR created >= %s NOT EXISTS (SELECT 1 FROM ways, jsonb_array_elements(r.members) ids WHERE id = (ids ->> 'ref') :: bigint);", (self.first_date, self.first_date,))
+        cur.execute("DELETE FROM relations r WHERE created >= %s AND NOT EXISTS (select 1 from nodes, jsonb_array_elements(r.members) ids WHERE id = (ids ->> 'ref') :: bigint) OR created >= %s AND NOT EXISTS (SELECT 1 FROM ways, jsonb_array_elements(r.members) ids WHERE id = (ids ->> 'ref') :: bigint);", (self.first_date, self.first_date,))
         print("Deleting Relations finished")
         conn.commit()
         cur.close()
