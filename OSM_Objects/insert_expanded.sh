@@ -5,10 +5,9 @@
 # sequence.state added in it. ope and changesetmd.py must either be added to the
 # path variable or the path must be added here.
 
-REPDIR="/tmp/osmhistory-replication"
+REPDIR="/var/cache/osmhistory-replication" # postgresql has private tmp enabled and thus cannot read from our tmp.
 DB="osmhistory"
 
-mkdir -p $REPDIR
 exec &> insert_logs.txt
 set -e
 
@@ -24,8 +23,6 @@ osm_objects() {
     pyosmium-get-changes -f sequence.state -o $REPDIR/changes.osm.gz
     echo "Creating Insertfiles from $REPDIR/changes.osm.gz in $REPDIR/"
     ope -H $REPDIR/changes.osm.gz $REPDIR/nodes=n%I.v.d.c.t.i.T.Gp $REPDIR/ways=w%I.v.d.c.t.i.T.N. $REPDIR/relations=r%I.v.d.c.t.i.T.M. $REPDIR/users=u%i.u.
-    echo "Setting permissions for repdir"
-    chmod -R 755 $REPDIR
     echo "Writing Data to Database $DB"
     psql -d $DB -f import.sql
     echo "Starting osm_pg_db_clipper.py"

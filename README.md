@@ -33,8 +33,7 @@ Dependencies (most surely incomplete :-O):
    2. `git clone https://github.com/ToeBee/ChangesetMD`
    3. `pip2 install psycopg2 lxml bz2file pyosmium`
    4. Download [changesets](https://planet.osm.org/planet/changesets-latest.osm.bz2)
-   5. `bunzip {changesets-?.osm.bz2}`
-   6. `python2 ChangesetMD/changesetmd.py -d {DB} -c -f {changesets-?.osm}`
+   6. `python2 changesetmd.py -d {DB} -c -f {changesets-?.osm.bz2}`
    7. `psql -U {user} -d {DB}`
    8. `\c {DB}`
    9. `update osm_changeset_state set last_sequence = {?};`
@@ -48,7 +47,6 @@ Dependencies (most surely incomplete :-O):
    2. `cd osm-postgresql-experiments/OSM_Objects`
    3. Download [osh](https://osm-internal.download.geofabrik.de/europe/switzerland-internal.osh.pbf)
    4. `pyosmium-get-changes -O {switzerland-internal.osh.pbf} -f sequence.state`
-   5. Download [switzerland's boundaries](https://planet.osm.ch/switzerland-exact.poly)
    5. Adjust paths in `insert_expanded.sh`
 5. Initialize DB
    1. `ope -H {switzerland-internal.osh.pbf} nodes=n%I.v.d.c.t.i.T.Gp ways=w%I.v.d.c.t.i.T.N. relations=r%I.v.d.c.t.i.T.M. users=u%i.u.`
@@ -57,9 +55,10 @@ Dependencies (most surely incomplete :-O):
    4. `psql -U {user} -d {DB} -f ways.sql`
    5. `psql -U {user} -d {DB} -f nodes.sql`
    6. `psql -U {user} -d {DB} -f osmhistorydb-ch/OSM_Objects/indexes.sql`
-   7. `python3 osmhistorydb-ch/OSM_Objects/osm_pg_db_clipper.py {DB} --boundary {switzerland-exact.poly}`
+   7. `python3 osmhistorydb-ch/OSM_Objects/osm_pg_db_clipper.py -d {DB} -b osmhistorydb-ch/OSM_Objects/borders.geojson -f {switzerland-internal.osh.pbf}`
 6. Cronjob
-   1. `*/10 * * * * bash {osmhistorydb-ch}/OSM_Objects/insert_expanded.sh` -- TODO run context?
+   1. Create cache directory: `mkdir /var/cache/osmhistory-replication`
+   2. `*/10 * * * * bash cd {osmhistorydb-ch}/OSM_Objects/ && ./insert_expanded.sh` 
 
 
 

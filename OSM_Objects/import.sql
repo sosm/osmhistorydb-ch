@@ -1,6 +1,6 @@
 CREATE EXTENSION IF NOT EXISTS file_fdw;
 
-CREATE SERVER import_changeset FOREIGN DATA WRAPPER file_fdw;
+CREATE SERVER IF NOT EXISTS import_changeset FOREIGN DATA WRAPPER file_fdw;
 
 CREATE FOREIGN TABLE IF NOT EXISTS import_nodes (
     "id" BIGINT NOT NULL, -- %COL:nodes:id%
@@ -12,7 +12,7 @@ CREATE FOREIGN TABLE IF NOT EXISTS import_nodes (
     "tags" JSONB, -- %COL:nodes:tags%
     "geom" GEOMETRY(POINT, 4326) -- %COL:nodes:geom%
 ) SERVER import_changeset
-OPTIONS ( filename '/tmp/osmhistory-replication/nodes.pgcopy', format 'text' );
+OPTIONS ( filename '/var/cache/osmhistory-replication/nodes.pgcopy', format 'text' );
 
 CREATE FOREIGN TABLE IF NOT EXISTS import_ways (
     "id" BIGINT NOT NULL, -- %COL:ways:id%
@@ -24,7 +24,7 @@ CREATE FOREIGN TABLE IF NOT EXISTS import_ways (
     "tags" JSONB, -- %COL:ways:tags%
     "nodes" BIGINT[] -- %COL:ways:nodes%
 ) SERVER import_changeset
-OPTIONS ( filename '/tmp/osmhistory-replication/ways.pgcopy', format 'text' );
+OPTIONS ( filename '/var/cache/osmhistory-replication/ways.pgcopy', format 'text' );
 
 CREATE FOREIGN TABLE IF NOT EXISTS import_relations (
     "id" BIGINT NOT NULL, -- %COL:relations:id%
@@ -36,13 +36,13 @@ CREATE FOREIGN TABLE IF NOT EXISTS import_relations (
     "tags" JSONB, -- %COL:relations:tags%
     "members" JSONB -- %COL:relations:members%
 ) SERVER import_changeset
-OPTIONS ( filename '/tmp/osmhistory-replication/relations.pgcopy', format 'text' );
+OPTIONS ( filename '/var/cache/osmhistory-replication/relations.pgcopy', format 'text' );
 
 CREATE FOREIGN TABLE IF NOT EXISTS import_users (
     "uid" INTEGER, -- %COL:users:uid%
     "username" TEXT -- %COL:users:username%
 ) SERVER import_changeset
-OPTIONS ( filename '/tmp/osmhistory-replication/users.pgcopy', format 'text' );
+OPTIONS ( filename '/var/cache/osmhistory-replication/users.pgcopy', format 'text' );
 
 INSERT INTO nodes (SELECT * FROM import_nodes) ON CONFLICT DO NOTHING;
 INSERT INTO ways (SELECT * FROM import_ways) ON CONFLICT DO NOTHING;
