@@ -46,12 +46,12 @@ if __name__ == '__main__':
     
     argParser = argparse.ArgumentParser(description="work in progress")
     argParser.add_argument('-H', '--host', action='store', dest='dbHost', help='Database hostname')
-    argParser.add_argument('-p' '--password', action='store', dest='dbPassword', help='Database Password')
-    argParser.add_argument('-u' '--user', action='store', dest='dbUser', help='Database Username')
-    argParser.add_argument('-d' '--database', action='store', dest='dbName', help='Target Database')
-    argParser.add_argument('-P' '--port', action='store', dest='dbPort', help='Database Port')
-    argParser.add_argument('-b' '--boundary', action='store', dest='boundary', help='Boundarys of Area to keep Data, as file', required=True)
-    argParser.add_argument('-f' '--file', action='store', dest='osm_file', help='The osm File', required=True)
+    argParser.add_argument('-p', '--password', action='store', dest='dbPassword', help='Database Password')
+    argParser.add_argument('-u', '--user', action='store', dest='dbUser', help='Database Username')
+    argParser.add_argument('-d', '--database', action='store', dest='dbName', help='Target Database')
+    argParser.add_argument('-P', '--port', action='store', dest='dbPort', help='Database Port')
+    argParser.add_argument('-b', '--boundary', action='store', dest='boundary', help='Boundarys of Area to keep Data, as file', required=True)
+    argParser.add_argument('-f', '--file', action='store', dest='osm_file', help='The osm File', required=True)
 
     args = argParser.parse_args()
     osmium_fileinfo = subprocess.run(['osmium fileinfo ' + args.osm_file + ' -e'], stdout=subprocess.PIPE, shell=True).stdout.decode('utf-8')

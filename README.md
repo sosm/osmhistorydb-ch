@@ -33,10 +33,9 @@ Dependencies (most surely incomplete :-O):
    2. `git clone https://github.com/ToeBee/ChangesetMD`
    3. `pip2 install psycopg2 lxml bz2file pyosmium`
    4. Download [changesets](https://planet.osm.org/planet/changesets-latest.osm.bz2)
-   6. `python2 changesetmd.py -d {DB} -c -f {changesets-?.osm.bz2}`
+   6. `python2 changesetmd.py -d {DB} -c -g -f {changesets-?.osm.bz2}`
    7. `psql -U {user} -d {DB}`
-   8. `\c {DB}`
-   9. `update osm_changeset_state set last_sequence = {?};`
+   8. `update osm_changeset_state set last_sequence = {SEQUENCE};` (See https://github.com/ToeBee/ChangesetMD#replication)
 3. Setup OPE
    1. `git clone https://github.com/lbuchli/osm-postgresql-experiments`
    2. `mkdir build && cd build`
