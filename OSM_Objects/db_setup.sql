@@ -7,7 +7,7 @@ CREATE TABLE temp_nodes (
     "uid" INTEGER, -- %COL:nodes:uid%
     "tags" JSONB, -- %COL:nodes:tags%
     "geom" GEOMETRY(POINT, 4326) -- %COL:nodes:geom%
-)
+);
 
 CREATE TABLE temp_ways (
     "id" BIGINT NOT NULL, -- %COL:ways:id%
@@ -18,7 +18,7 @@ CREATE TABLE temp_ways (
     "uid" INTEGER, -- %COL:ways:uid%
     "tags" JSONB, -- %COL:ways:tags%
     "nodes" BIGINT[] -- %COL:ways:nodes%
-)
+);
 
 CREATE TABLE temp_relations (
     "id" BIGINT NOT NULL, -- %COL:relations:id%
@@ -29,12 +29,12 @@ CREATE TABLE temp_relations (
     "uid" INTEGER, -- %COL:relations:uid%
     "tags" JSONB, -- %COL:relations:tags%
     "members" JSONB -- %COL:relations:members%
-)
+);
 
 CREATE TABLE temp_users (
     "uid" INTEGER, -- %COL:users:uid%
     "username" TEXT -- %COL:users:username%
-)
+);
 
 ALTER TABLE "nodes" ADD PRIMARY KEY(id, version); -- %PK:nodes%
 ALTER TABLE "relations" ADD PRIMARY KEY(id, version); -- %PK:relations%
