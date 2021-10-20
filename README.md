@@ -53,7 +53,7 @@ Dependencies (most surely incomplete :-O):
    3. `psql -U {user} -d {DB} -f relations.sql`
    4. `psql -U {user} -d {DB} -f ways.sql`
    5. `psql -U {user} -d {DB} -f nodes.sql`
-   6. `psql -U {user} -d {DB} -f osmhistorydb-ch/OSM_Objects/indexes.sql`
+   6. `psql -U {user} -d {DB} -f osmhistorydb-ch/OSM_Objects/db_setup.sql`
    7. `python3 osmhistorydb-ch/OSM_Objects/osm_pg_db_clipper.py -d {DB} -b osmhistorydb-ch/OSM_Objects/borders.geojson -f {switzerland-internal.osh.pbf}`
 6. Cronjob
    1. Create cache directory: `mkdir /var/cache/osmhistory-replication`
