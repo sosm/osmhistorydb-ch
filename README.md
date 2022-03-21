@@ -43,7 +43,7 @@ Dependencies (most surely incomplete :-O):
    4. `make install`
 4. Setup OSMHistoryDB-CH
    1. `git clone https://github.com/lbuchli/osmhistorydb-ch`
-   2. `cd osm-postgresql-experiments/OSM_Objects`
+   2. `cd osmhistorydb-ch/OSM_Objects`
    3. Download [osh](https://osm-internal.download.geofabrik.de/europe/switzerland-internal.osh.pbf)
    4. `pyosmium-get-changes -O {switzerland-internal.osh.pbf} -f sequence.state`
    5. Adjust paths in `insert_expanded.sh`
